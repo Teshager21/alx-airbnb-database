@@ -1,46 +1,48 @@
-## 📊 Database Normalization – `users` Table
+## 📐 Database Normalization Analysis
 
-This section explains how the designed database satisfies the conditions of the first three normal forms (1NF, 2NF, and 3NF), ensuring data integrity, minimal redundancy, and optimized structure.
-
----
-
-### 🔹 First Normal Form (1NF)
-
-✅ **Atomicity**: Each field contains indivisible values (e.g., `first_name`, `role`, `email`).
-
-✅ **No repeating groups**: Every column holds a single value per row.
-
-> ✔️ The database meets **1NF** requirements.
+This database schema adheres to the principles of **Third Normal Form (3NF)**, ensuring data integrity, reducing redundancy, and supporting scalability.
 
 ---
 
-### 🔹 Second Normal Form (2NF)
+### ✅ First Normal Form (1NF)
 
-✅ **Primary Key**: The table has a single-column primary key: `user_id` (UUID).
+- Each table has a **primary key**.
+- All columns contain **atomic values** (no repeating groups or arrays).
+- Each field holds data of a **single type** per row.
 
-✅ **Full functional dependency**: All non-key attributes (`email`, `first_name`, `role`, etc.) depend entirely on the primary key.
-
-> ✔️ The database design meets **2NF** because no partial dependencies exist.
-
----
-
-### 🔹 Third Normal Form (3NF)
-
-✅ **No transitive dependencies**: No non-key column depends on another non-key column.  
-All fields depend directly and only on the primary key (`user_id`).
-
-> ✔️ The database design meets **3NF**. It's properly normalized, avoids redundancy, and ensures consistency.
+> ✔️ All tables satisfy 1NF.
 
 ---
 
-### ✅ Conclusion
+### ✅ Second Normal Form (2NF)
 
-The `airbnb database` is well-structured and normalized to **Third Normal Form (3NF)**:
+- All tables use a **single-column primary key** (UUIDs).
+- No partial dependencies exist — **every non-key column** depends on the whole primary key.
 
-- 📦 **Efficient storage**
-- 🚀 **Minimal update anomalies**
-- 🛡️ **High data integrity**
+> ✔️ All tables satisfy 2NF.
 
-This makes it a solid foundation for relational database design.
+---
+
+### ✅ Third Normal Form (3NF)
+
+- No **transitive dependencies** are present:
+  - In every table, non-key attributes are functionally dependent only on the primary key.
+  - Example:  
+    - In the `users` table, `email`, `role`, and `password_hash` depend only on `user_id`.  
+    - In `bookings`, `total_price` is stored as a final amount and not derived dynamically from related tables, so it does not violate 3NF.
+- No derived or redundant data is stored across tables.
+
+> ✔️ All tables satisfy 3NF.
+
+---
+
+### 🧠 Conclusion
+
+The schema is:
+- 📦 **Efficiently structured**
+- 🔁 **Free of update anomalies**
+- 🧼 **Cleanly normalized**
+
+This makes the database easy to query, maintain, and scale. Optional improvements (like splitting locations or enums into lookup tables) can be added based on future requirements, but are not needed for 3NF compliance.
 
 ---
