@@ -1,8 +1,8 @@
 
 --performance before indexing
-EXPLAIN SELECT * FROM users WHERE username = 'some_username';
-EXPLAIN SELECT * FROM bookings WHERE user_id = 123 AND booking_date BETWEEN '2024-01-01' AND '2024-01-31';
-EXPLAIN SELECT p.property_name FROM properties p JOIN bookings b ON p.property_id = b.property_id WHERE b.user_id = 456;
+EXPLAIN ANALYZE SELECT * FROM users WHERE username = 'some_username';
+EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 123 AND booking_date BETWEEN '2024-01-01' AND '2024-01-31';
+EXPLAIN ANALYZE SELECT p.property_name FROM properties p JOIN bookings b ON p.property_id = b.property_id WHERE b.user_id = 456;
 
 -- Index for users table
 CREATE INDEX idx_user_id ON users (user_id);
@@ -26,6 +26,6 @@ CREATE INDEX idx_property_date_bookings ON bookings (property_id, booking_date);
 
 
 --performance after
-EXPLAIN SELECT * FROM users WHERE username = 'some_username';
-EXPLAIN SELECT * FROM bookings WHERE user_id = 123 AND booking_date BETWEEN '2024-01-01' AND '2024-01-31';
-EXPLAIN SELECT p.property_name FROM properties p JOIN bookings b ON p.property_id = b.property_id WHERE b.user_id = 456;
+EXPLAIN ANALYZE SELECT * FROM users WHERE username = 'some_username';
+EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 123 AND booking_date BETWEEN '2024-01-01' AND '2024-01-31';
+EXPLAIN ANALYZE SELECT p.property_name FROM properties p JOIN bookings b ON p.property_id = b.property_id WHERE b.user_id = 456;
