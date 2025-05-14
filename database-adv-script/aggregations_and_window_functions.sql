@@ -37,3 +37,14 @@ FROM
     PropertyBookingCounts
 ORDER BY
     booking_rank_row_number;
+
+--Using RANK():
+SELECT
+    property_id,
+    property_name,
+    total_bookings,
+    RANK() OVER (ORDER BY total_bookings DESC) AS booking_rank_rank
+FROM
+    PropertyBookingCounts
+ORDER BY
+    booking_rank_rank;
