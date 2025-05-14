@@ -13,15 +13,16 @@ INNER JOIN
 
 --2. LEFT JOIN: Retrieve all properties and their reviews, including properties that have no reviews.
 
-SELECT
-    p.property_id,
-    p.property_name,
-    r.review_id,
-    r.review_text,
-    r.rating
-FROM
+ SELECT 
+    p.property_id, 
+    p.property_name, 
+    p.description, 
+    r.review_id, 
+    r.rating, 
+    r.review_text
+FROM 
     properties p
-LEFT JOIN
+LEFT JOIN 
     reviews r ON p.property_id = r.property_id;
 
 --3. FULL OUTER JOIN: Retrieve all users and all bookings, even if the user has no booking or a booking is not linked to a user.
