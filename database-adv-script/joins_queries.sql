@@ -26,6 +26,7 @@ LEFT JOIN
 
 --3. FULL OUTER JOIN: Retrieve all users and all bookings, even if the user has no booking or a booking is not linked to a user.
 
+-- Users with or without bookings
 SELECT 
     users.user_id,
     users.name,
@@ -39,6 +40,7 @@ LEFT JOIN
 
 UNION
 
+-- Bookings without matching users
 SELECT 
     users.user_id,
     users.name,
@@ -48,4 +50,7 @@ SELECT
 FROM 
     bookings
 LEFT JOIN 
-    users ON bookings.user_id = users.user_id;
+    users ON bookings.user_id = users.user_id
+WHERE 
+    users.user_id IS NULL;
+
