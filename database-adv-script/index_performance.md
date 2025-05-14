@@ -1,0 +1,1 @@
+# Measure the query performance before and after adding indexes using EXPLAIN or ANALYZE
