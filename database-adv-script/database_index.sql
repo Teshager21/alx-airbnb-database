@@ -1,4 +1,6 @@
 
+--Add the following indexes to improve join performance:
+CREATE INDEX idx_booking_user_id ON Booking(user_id);
 --performance before indexing
 EXPLAIN ANALYZE SELECT * FROM users WHERE username = 'some_username';
 EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 123 AND booking_date BETWEEN '2024-01-01' AND '2024-01-31';
