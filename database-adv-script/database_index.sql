@@ -1,33 +1,29 @@
+-- performance before indexing
+EXPLAIN
+SELECT u.first_name, u.last_name, COUNT(b.booking_id)
+FROM User u
+JOIN Booking b ON u.user_id = b.user_id
+GROUP BY u.user_id;
 
---Add the following indexes to improve join performance:
+
+-- User Table
+CREATE INDEX idx_user_email ON User(email);
+CREATE INDEX idx_user_id ON User(user_id);
+
+-- Booking Table
 CREATE INDEX idx_booking_user_id ON Booking(user_id);
---performance before indexing
-EXPLAIN ANALYZE SELECT * FROM users WHERE username = 'some_username';
-EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 123 AND booking_date BETWEEN '2024-01-01' AND '2024-01-31';
-EXPLAIN ANALYZE SELECT p.property_name FROM properties p JOIN bookings b ON p.property_id = b.property_id WHERE b.user_id = 456;
+CREATE INDEX idx_booking_property_id ON Booking(property_id);
+CREATE INDEX idx_booking_start_date ON Booking(start_date);
 
--- Index for users table
-CREATE INDEX idx_user_id ON users (user_id);
-CREATE INDEX idx_username ON users (username);
-CREATE INDEX idx_email ON users (email);
-
--- Index for bookings table
-CREATE INDEX idx_booking_id ON bookings (booking_id);
-CREATE INDEX idx_user_id_bookings ON bookings (user_id);
-CREATE INDEX idx_property_id_bookings ON bookings (property_id);
-CREATE INDEX idx_booking_date ON bookings (booking_date);
-
--- Index for properties table
-CREATE INDEX idx_property_id ON properties (property_id);
-CREATE INDEX idx_property_name ON properties (property_name);
-CREATE INDEX idx_location ON properties (location);
-
--- Consider composite indexes for columns often used together in WHERE clauses
--- Example: Finding bookings within a specific date range for a specific property
-CREATE INDEX idx_property_date_bookings ON bookings (property_id, booking_date);
+-- Property Table
+CREATE INDEX idx_property_name ON Property(name);
+CREATE INDEX idx_property_location ON Property(location);
+CREATE INDEX idx_property_id ON Property(property_id);
 
 
---performance after
-EXPLAIN ANALYZE SELECT * FROM users WHERE username = 'some_username';
-EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 123 AND booking_date BETWEEN '2024-01-01' AND '2024-01-31';
-EXPLAIN ANALYZE SELECT p.property_name FROM properties p JOIN bookings b ON p.property_id = b.property_id WHERE b.user_id = 456;
+-- Performance after indexing
+EXPLAIN
+SELECT u.first_name, u.last_name, COUNT(b.booking_id)
+FROM User u
+JOIN Booking b ON u.user_id = b.user_id
+GROUP BY u.user_id;
